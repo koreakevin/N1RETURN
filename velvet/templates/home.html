@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+
+
+{% block contnent1 %}
+
+{% for blog in blogs.all %}
+    <hr style="border-color:lightcoral;">
+    <h1 style="text-align: center; margin-top: 20px;">[ {{ blog.title }} ]</h1>
+    <hr style="border: 1px; border-color: maroon;">
+    <div class="container2" style="text-align: center;">
+    	<p>{{ blog.pub_date }}</p>
+    	<p style="font-size: 35px;">{{ blog.body }}</p>
+    </div>
+    <div style="text-align: center">
+    	<a role="button" class="btn btn-primary" href="{% url 'edit' pk=blog.pk %}#portfolio1">수정</a>
+    	<a role="button" class="btn btn-primary" href="{% url 'remove' pk=blog.pk %}#contact">삭제</a>
+    </div>
+    {% for comment in blog.comments.all %}
+           <div class="alert alert-primary" style="margin: 10px; 0px;">
+               <div class="container">
+                   <h1 style="font-size: 15px;" class="display-4">{{ comment.comment_text }}</h1>
+                   <div style="text-align: right;">
+                       <a class="btn btn-secondary" href="{% url 'comment_edit' comment.id %}" role="button">수정</a> 
+                       <a class="btn btn-danger" href="{% url 'comment_delete' comment.id %}" role="button">삭제</a>
+                   </div>
+                   
+               </div>
+           </div>
+    {% endfor %}
+    <div style="text-align: right;">
+        <a class="btn btn-secondary" href="{% url 'comment_new' blog.id %}" role="button">댓글쓰기</a>
+    </div>
+    
+{% endfor %}    
+{% endblock %}
